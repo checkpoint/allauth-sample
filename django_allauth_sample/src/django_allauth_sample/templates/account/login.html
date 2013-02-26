@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load account %}
+{% load socialaccount %}
+{% load url from future %}
+
+{% block head_title %}ログイン{% endblock %}
+{% block extra_head %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/login.css" media="screen,print"/>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form class="login_form">
+            {% if not user.is_authenticated %}
+                {% if socialaccount.providers %}
+                    <div class="socialaccount_ballot">
+                        <h4>ログイン</h4>
+                        <div>
+                            {% for provider in socialaccount.providers %}
+                                <p><a class="btn btn-large btn-primary" title="{{provider.name}}"
+                                      href="{% provider_login_url provider.id %}">{{provider.name}}アカウントでログイン</a></p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </form>
+    </div>
+{% endblock %}
+
